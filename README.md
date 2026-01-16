@@ -1,9 +1,3 @@
-지금까지 함께 작업한 **Sort AI (Standard Flow)** 프로젝트의 기능과 기술 스택을 정리한 `README.md` 파일입니다.
-
-프로젝트 루트 디렉토리에 `README.md` 파일을 생성하고 아래 내용을 붙여넣으시면 됩니다.
-
----
-
 # Sort AI (Standard Flow)
 
 **AI 기반 농수산물 유통/물류 운영 관리 플랫폼**

@@ -1,23 +1,49 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Layouts
+import MobileLayout from './layouts/MobileLayout';
+import WorkerLayout from './layouts/WorkerLayout';
+import AdminLayout from './layouts/AdminLayout';
+
+// Pages
+import Landing from './pages/Landing';
+import WorkerHome from './pages/worker/WorkerHome';
+import TicketDetail from './pages/worker/TicketDetail';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import ProductManage from './pages/admin/ProductManage';
+import ProductDetail from './pages/admin/ProductDetail';
+import AdminSettings from './pages/admin/AdminSettings';
+import {ThemeProvider} from "./context/ThemeContext.tsx";
+
+const queryClient = new QueryClient();
 
 function App() {
     return (
-        // 전체 화면 높이(h-screen), 배경색(bg-blue-500), 플렉스 박스로 중앙 정렬
-        <div className="h-screen w-full flex items-center justify-center bg-blue-500">
-            <div className="text-center">
-                {/* 글자 크기(text-5xl), 굵기(font-bold), 글자색(text-white) */}
-                <h1 className="text-5xl font-bold text-white mb-4">
-                    Tailwind v4 작동 성공! 🎉
-                </h1>
-                <p className="text-blue-100 text-xl">
-                    이제 스타일링을 시작해보세요.
-                </p>
-                <button className="mt-6 px-6 py-2 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition">
-                    테스트 버튼
-                </button>
-            </div>
-        </div>
-    )
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route element={<MobileLayout />}>
+                            <Route path="/" element={<Landing />} />
+
+                            <Route element={<WorkerLayout />}>
+                                <Route path="/worker" element={<WorkerHome />} />
+                                <Route path="/worker/tickets/:id" element={<TicketDetail />} />
+                            </Route>
+
+                            <Route element={<AdminLayout />}>
+                                <Route path="/admin" element={<AdminDashboard />} />
+                                <Route path="/admin/products" element={<ProductManage />} />
+                                <Route path="/admin/products/:id" element={<ProductDetail />} />
+                                <Route path="/admin/settings" element={<AdminSettings />} />
+                            </Route>
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </ThemeProvider>
+        </QueryClientProvider>
+    );
 }
 
-export default App
+export default App;
